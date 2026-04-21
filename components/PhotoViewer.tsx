@@ -15,7 +15,7 @@ export default function PhotoViewer() {
 
     const viewer = new Viewer({
       container: containerRef.current,
-      panorama: "/images/test.jpg",
+      panorama: `${process.env.NEXT_PUBLIC_IMAGES_URL}/${selected?.prefecture}.jpg`,
       navbar: ["caption"],
       mousewheel: true,
       caption: `<b>${selected?.region}</b> region. <b>${selected?.prefecture}</b> prefecture.`,
