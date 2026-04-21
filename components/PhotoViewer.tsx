@@ -18,7 +18,7 @@ export default function PhotoViewer() {
       panorama: "/images/test.jpg",
       navbar: ["caption"],
       mousewheel: true,
-      caption: `<b>${selected?.prefecture}</b> prefecture.`,
+      caption: `<b>${selected?.region}</b> region. <b>${selected?.prefecture}</b> prefecture.`,
     });
 
     return () => viewer.destroy();
