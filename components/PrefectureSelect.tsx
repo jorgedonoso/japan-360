@@ -3,6 +3,7 @@
 import { useLocationStore } from "@/src/stores/useLocationStore";
 import regionsAndPrefectures from "@/src/data/regions-and-prefectures.json";
 import { createRegionLookup, doesImageExist } from "@/src/util/helpers";
+import { trackEvent } from "@/src/lib/googleTag";
 
 const regionLookup = createRegionLookup(regionsAndPrefectures);
 
@@ -20,6 +21,11 @@ export default function PrefectureSelect() {
         region: regionLookup[selectedPref],
         prefecture: selectedPref,
       });
+
+      trackEvent("prefecture_selected", {
+        region: regionLookup[selectedPref],
+        prefecture: selectedPref,
+      });
     } else {
       alert("This 360° image is not ready yet.");
     }
@@ -27,15 +33,15 @@ export default function PrefectureSelect() {
 
   return (
     <select
-      className="absolute top-0 left-0 m-4 rounded-md bg-white z-[9999] border p-2"
+      className="absolute top-0 left-0 m-4 rounded-md bg-white text-black z-[9999] border p-2"
       onChange={handleChange}
       value={selected?.prefecture}
     >
       {regionsAndPrefectures.map((region) => (
-        <optgroup key={region.name} label={region.name}>
+        <optgroup key={region.name} label={`${region.name} Region`}>
           {region.prefectures.map((pref) => (
             <option key={pref} value={pref}>
-              {pref}
+              {pref} Prefecture
             </option>
           ))}
         </optgroup>
