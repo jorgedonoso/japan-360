@@ -5,7 +5,7 @@ import { savePoint } from "./Action";
 import PrefectureSelect from "./PrefectureSelect";
 import { toast } from "react-toastify";
 
-const isDeployed = process.env.VERCEL_ENV === "production";
+const isDeployed = process.env.NEXT_PUBLIC_ENVIRONMENT === "production";
 
 export default function EditOrientation() {
   const selectedPrefecture = useLocationStore((s) => s.selectedPrefecture);
