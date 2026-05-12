@@ -5,6 +5,7 @@ import "./globals.css";
 import "@photo-sphere-viewer/core/index.css";
 import { Analytics } from "@vercel/analytics/next";
 import EditOrientation from "@/components/EditOrientation";
+import { ToastContainer } from "react-toastify";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID!;
 
@@ -47,6 +48,7 @@ export default function RootLayout({
             gtag('config', '${GA_ID}');
           `}
         </Script>
+        <ToastContainer position="top-right" autoClose={3000} />
         <Analytics></Analytics>
         <div className="absolute w-64 m-4 rounded text-black z-[9999] p-2">
           <EditOrientation />

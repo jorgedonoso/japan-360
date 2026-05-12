@@ -4,6 +4,7 @@ import { useLocationStore } from "@/src/stores/useLocationStore";
 import regionsAndPrefectures from "@/src/data/regions-and-prefectures.json";
 import { createRegionLookup, doesImageExist } from "@/src/util/helpers";
 import { trackEvent } from "@/src/lib/googleTag";
+import { toast } from "react-toastify";
 
 const regionLookup = createRegionLookup(regionsAndPrefectures);
 
@@ -25,7 +26,7 @@ export default function PrefectureSelect() {
         prefecture: selectedPref,
       });
     } else {
-      alert("This 360° image is not ready yet.");
+      toast.error("This 360° image is not ready yet.");
     }
   };
 

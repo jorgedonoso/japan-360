@@ -3,6 +3,7 @@
 import { useLocationStore } from "@/src/stores/useLocationStore";
 import { savePoint } from "./Action";
 import PrefectureSelect from "./PrefectureSelect";
+import { toast } from "react-toastify";
 
 export default function EditOrientation() {
   const selectedPrefecture = useLocationStore((s) => s.selectedPrefecture);
@@ -15,8 +16,11 @@ export default function EditOrientation() {
       yaw: yaw!,
       pitch: pitch!,
     });
+
     if (!res) {
-      alert("Error");
+      toast.error("Error Saving");
+    } else {
+      toast.success("Orientation Saved");
     }
   };
 
