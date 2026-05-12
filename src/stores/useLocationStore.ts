@@ -1,8 +1,7 @@
 import { create } from "zustand";
-import { Location } from "../types/location";
 
 interface LocationState {
-  objects: Record<string, Location>; // From db.
+  objects: Record<string, Orientation>; // From db.
   selectedPrefecture: string;
   setSelected: (prefecture: string) => void;
   updateYawPitch: (prefecture: string, yaw: number, pitch: number) => void;

@@ -1,11 +1,6 @@
 "use server";
 
-import db from "@/src/data/db";
-
-interface Orientation {
-  yaw: number;
-  pitch: number;
-}
+import db from "@/src/data/database";
 
 export async function getInitialOrientation(
   prefecture: string,

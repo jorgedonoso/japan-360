@@ -25,17 +25,17 @@ export default function EditOrientation() {
       <PrefectureSelect></PrefectureSelect>
       <form className="space-y-4">
         <div>
-          <label className="block font-medium mb-1">Yaw:</label>
+          <label className="block font-bold mb-1">Yaw:</label>
           {yaw}
         </div>
         <div>
-          <label className="block font-medium mb-1">Pitch:</label>
+          <label className="block font-bold mb-1">Pitch:</label>
           {pitch}
         </div>
         <button
           type="button"
           onClick={handleSave}
-          className="cursor-pointer w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition"
+          className="cursor-pointer font-bold w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition"
         >
           Save Orientation
         </button>
