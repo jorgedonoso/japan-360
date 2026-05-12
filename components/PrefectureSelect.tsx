@@ -4,11 +4,13 @@ import { useLocationStore } from "@/src/stores/useLocationStore";
 import regionsAndPrefectures from "@/src/data/regions-and-prefectures.json";
 import { createRegionLookup, doesImageExist } from "@/src/util/helpers";
 import { trackEvent } from "@/src/lib/googleTag";
+import { toast } from "react-toastify";
 
 const regionLookup = createRegionLookup(regionsAndPrefectures);
 
 export default function PrefectureSelect() {
-  const { selected, setLocation } = useLocationStore();
+  const selectedPrefecture = useLocationStore((s) => s.selectedPrefecture);
+  const setPrefecture = useLocationStore((s) => s.setSelected);
 
   const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedPref = e.target.value;
@@ -17,25 +19,22 @@ export default function PrefectureSelect() {
     );
 
     if (isImageOk) {
-      setLocation({
-        region: regionLookup[selectedPref],
-        prefecture: selectedPref,
-      });
+      setPrefecture(selectedPref);
 
       trackEvent("prefecture_selected", {
         region: regionLookup[selectedPref],
         prefecture: selectedPref,
       });
     } else {
-      alert("This 360° image is not ready yet.");
+      toast.error("This 360° image is not ready yet.");
     }
   };
 
   return (
     <select
-      className="absolute top-0 left-0 m-4 rounded-md bg-white text-black z-[9999] border p-2"
+      className="w-full mb-4 rounded-md bg-white text-black z-[9999] border p-2"
       onChange={handleChange}
-      value={selected?.prefecture}
+      value={selectedPrefecture}
     >
       {regionsAndPrefectures.map((region) => (
         <optgroup key={region.name} label={`${region.name} Region`}>
