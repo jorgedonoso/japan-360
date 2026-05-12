@@ -1,4 +1,4 @@
 export interface Location {
-  region: string;
-  prefecture: string;
+  yaw?: number;
+  pitch?: number;
 }

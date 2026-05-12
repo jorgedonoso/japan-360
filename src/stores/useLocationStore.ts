@@ -2,11 +2,24 @@ import { create } from "zustand";
 import { Location } from "../types/location";
 
 interface LocationState {
-  selected: Location | null;
-  setLocation: (location: Location) => void;
+  objects: Record<string, Location>; // From db.
+  selectedPrefecture: string;
+  setSelected: (prefecture: string) => void;
+  updateYawPitch: (prefecture: string, yaw: number, pitch: number) => void;
 }
 
 export const useLocationStore = create<LocationState>((set) => ({
-  selected: { region: "Hokkaido", prefecture: "Hokkaido" },
-  setLocation: (location) => set({ selected: location }),
+  objects: {
+    Hokkaido: { yaw: 0, pitch: 0 },
+    Tokyo: { yaw: 0, pitch: 0 },
+  },
+  selectedPrefecture: "Hokkaido",
+  setSelected: (prefecture) => set({ selectedPrefecture: prefecture }),
+  updateYawPitch: (prefecture, yaw, pitch) =>
+    set((state) => ({
+      objects: {
+        ...state.objects,
+        [prefecture]: { ...state.objects[prefecture], yaw, pitch },
+      },
+    })),
 }));

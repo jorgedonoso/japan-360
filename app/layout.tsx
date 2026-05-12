@@ -3,8 +3,8 @@ import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "@photo-sphere-viewer/core/index.css";
-import PrefectureSelect from "@/components/PrefectureSelect";
 import { Analytics } from "@vercel/analytics/next";
+import EditOrientation from "@/components/EditOrientation";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID!;
 
@@ -48,7 +48,9 @@ export default function RootLayout({
           `}
         </Script>
         <Analytics></Analytics>
-        <PrefectureSelect></PrefectureSelect>
+        <div className="absolute w-64 m-4 rounded text-black z-[9999] p-2">
+          <EditOrientation />
+        </div>
         {children}
       </body>
     </html>
