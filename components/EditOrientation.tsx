@@ -5,6 +5,8 @@ import { savePoint } from "./Action";
 import PrefectureSelect from "./PrefectureSelect";
 import { toast } from "react-toastify";
 
+const isDeployed = process.env.VERCEL_ENV === "production";
+
 export default function EditOrientation() {
   const selectedPrefecture = useLocationStore((s) => s.selectedPrefecture);
   const yaw = useLocationStore((s) => s.objects[selectedPrefecture!]?.yaw);
@@ -36,13 +38,15 @@ export default function EditOrientation() {
           <label className="block font-bold mb-1">Pitch:</label>
           {pitch}
         </div>
-        <button
-          type="button"
-          onClick={handleSave}
-          className="cursor-pointer font-bold w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition"
-        >
-          Save Orientation
-        </button>
+        {!isDeployed && (
+          <button
+            type="button"
+            onClick={handleSave}
+            className="cursor-pointer font-bold w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition"
+          >
+            Save Orientation
+          </button>
+        )}
       </form>
     </div>
   );
