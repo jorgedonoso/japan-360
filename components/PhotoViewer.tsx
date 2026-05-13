@@ -10,6 +10,7 @@ import { isProduction } from "@/src/util/helpers";
 
 export default function PhotoViewer() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const setIsViewerReady = useLocationStore((s) => s.setIsViewerReady);
 
   const updateYawPitch = useLocationStore((s) => s.updateYawPitch);
   const selectedPrefecture = useLocationStore((s) => s.selectedPrefecture);
@@ -20,6 +21,7 @@ export default function PhotoViewer() {
     let viewer: Viewer | null = null;
 
     async function initViewer() {
+      setIsViewerReady(false);
       let orientation = await getInitialOrientation(selectedPrefecture);
 
       // Check localStorage in production as Vercel's fs is temporary.
@@ -56,6 +58,7 @@ export default function PhotoViewer() {
         "ready",
         () => {
           viewer?.setOptions({ maxFov: 120 });
+          setIsViewerReady(true);
         },
         { once: true },
       );

@@ -50,9 +50,7 @@ export default function RootLayout({
         </Script>
         <ToastContainer position="top-right" autoClose={3000} />
         <Analytics></Analytics>
-        <div className="absolute w-64 m-4 rounded text-black z-[9999] p-2">
-          <EditOrientation />
-        </div>
+        <EditOrientation />
         {children}
       </body>
     </html>

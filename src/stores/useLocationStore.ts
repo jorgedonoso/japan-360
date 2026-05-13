@@ -5,6 +5,8 @@ interface LocationState {
   selectedPrefecture: string;
   setSelected: (prefecture: string) => void;
   updateYawPitch: (prefecture: string, yaw: number, pitch: number) => void;
+  isViewerReady: boolean;
+  setIsViewerReady: (isViewerReady: boolean) => void;
 }
 
 export const useLocationStore = create<LocationState>((set) => ({
@@ -21,4 +23,6 @@ export const useLocationStore = create<LocationState>((set) => ({
         [prefecture]: { ...state.objects[prefecture], yaw, pitch },
       },
     })),
+  isViewerReady: false,
+  setIsViewerReady: (isViewerReady) => set({ isViewerReady }),
 }));
