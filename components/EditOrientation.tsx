@@ -4,25 +4,29 @@ import { useLocationStore } from "@/src/stores/useLocationStore";
 import { savePoint } from "./Action";
 import PrefectureSelect from "./PrefectureSelect";
 import { toast } from "react-toastify";
-
-const isDeployed = process.env.NEXT_PUBLIC_ENVIRONMENT === "production";
+import { isProduction } from "@/src/util/helpers";
 
 export default function EditOrientation() {
-  const selectedPrefecture = useLocationStore((s) => s.selectedPrefecture);
-  const yaw = useLocationStore((s) => s.objects[selectedPrefecture!]?.yaw);
-  const pitch = useLocationStore((s) => s.objects[selectedPrefecture!]?.pitch);
+  const prefecture = useLocationStore((s) => s.selectedPrefecture);
+  const yaw = useLocationStore((s) => s.objects[prefecture!]?.yaw);
+  const pitch = useLocationStore((s) => s.objects[prefecture!]?.pitch);
 
   const handleSave = async () => {
-    const res = await savePoint({
-      prefecture: selectedPrefecture,
-      yaw: yaw!,
-      pitch: pitch!,
-    });
-
-    if (!res) {
-      toast.error("Error Saving");
+    if (isProduction()) {
+      localStorage.setItem(prefecture, JSON.stringify({ yaw, pitch }));
+      toast.success("Orientation Saved to Local Storage");
     } else {
-      toast.success("Orientation Saved");
+      const res = await savePoint({
+        prefecture,
+        yaw,
+        pitch,
+      });
+
+      if (!res) {
+        toast.error("Error Saving");
+      } else {
+        toast.success("Orientation Saved to Database");
+      }
     }
   };
 
@@ -38,15 +42,13 @@ export default function EditOrientation() {
           <label className="block font-bold mb-1">Pitch:</label>
           {pitch}
         </div>
-        {!isDeployed && (
-          <button
-            type="button"
-            onClick={handleSave}
-            className="cursor-pointer font-bold w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition"
-          >
-            Save Orientation
-          </button>
-        )}
+        <button
+          type="button"
+          onClick={handleSave}
+          className="cursor-pointer font-bold w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition"
+        >
+          Save Orientation
+        </button>
       </form>
     </div>
   );

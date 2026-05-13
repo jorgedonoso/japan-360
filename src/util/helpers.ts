@@ -20,3 +20,7 @@ export async function doesImageExist(url: string): Promise<boolean> {
     return false;
   }
 }
+
+export function isProduction(): boolean {
+  return process.env.NEXT_PUBLIC_ENVIRONMENT === "production";
+}
