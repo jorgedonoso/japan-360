@@ -5,6 +5,8 @@ import { savePoint } from "./Action";
 import PrefectureSelect from "./PrefectureSelect";
 import { toast } from "react-toastify";
 import { isProduction } from "@/src/util/helpers";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSave } from "@fortawesome/free-solid-svg-icons";
 
 export default function EditOrientation() {
   const prefecture = useLocationStore((s) => s.selectedPrefecture);
@@ -34,8 +36,8 @@ export default function EditOrientation() {
   if (!isViewerReady) return <></>;
 
   return (
-    <div className="absolute w-64 m-4 rounded text-black z-[9999] p-2">
-      <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow">
+    <div className="absolute w-64 m-2 rounded text-black z-[9999]">
+      <div className="max-w-md mx-auto p-4 bg-white rounded-lg shadow">
         <PrefectureSelect></PrefectureSelect>
         <form className="space-y-4">
           <div>
@@ -51,6 +53,7 @@ export default function EditOrientation() {
             onClick={handleSave}
             className="cursor-pointer font-bold w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition"
           >
+            <FontAwesomeIcon icon={faSave} className="mr-1" />
             Save Orientation
           </button>
         </form>

@@ -72,5 +72,5 @@ export default function PhotoViewer() {
     };
   }, [selectedPrefecture, updateYawPitch]);
 
-  return <div ref={containerRef} className="w-screen h-screen" />;
+  return <div ref={containerRef} className="w-screen h-dvh" />;
 }
