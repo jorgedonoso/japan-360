@@ -11,14 +11,15 @@ import { isProduction } from "@/src/util/helpers";
 export default function PhotoViewer() {
   const containerRef = useRef<HTMLDivElement>(null);
   const setIsViewerReady = useLocationStore((s) => s.setIsViewerReady);
-
   const updateYawPitch = useLocationStore((s) => s.updateYawPitch);
   const selectedPrefecture = useLocationStore((s) => s.selectedPrefecture);
+
+  const viewerRef = useRef<Viewer | null>(null);
 
   useEffect(() => {
     if (!containerRef.current || !selectedPrefecture) return;
 
-    let viewer: Viewer | null = null;
+    let isCancelled = false;
 
     async function initViewer() {
       setIsViewerReady(false);
@@ -36,17 +37,32 @@ export default function PhotoViewer() {
         }
       }
 
+      // Abort if component is destroyed waiting for initial orientation.
+      if (isCancelled) return;
+
+      // Defensive cleanup.
+      if (viewerRef.current) {
+        viewerRef.current.destroy();
+      }
+
       updateYawPitch(selectedPrefecture, orientation.yaw, orientation.pitch);
 
-      viewer = new Viewer({
+      const viewerInstance = new Viewer({
         container: containerRef.current!,
         panorama: `${process.env.NEXT_PUBLIC_IMAGES_URL}/${selectedPrefecture}.jpg`,
         navbar: false,
         defaultYaw: orientation.yaw,
         defaultPitch: orientation.pitch,
+        minFov: 30,
+        maxFov: 120,
+        defaultZoomLvl: 0,
+        moveInertia: false,
+        mousewheel: false,
       });
 
-      viewer.addEventListener("position-updated", (position) => {
+      viewerRef.current = viewerInstance;
+
+      viewerInstance.addEventListener("position-updated", (position) => {
         updateYawPitch(
           selectedPrefecture,
           position.position.yaw,
@@ -54,10 +70,15 @@ export default function PhotoViewer() {
         );
       });
 
-      viewer.addEventListener(
+      viewerInstance.addEventListener("zoom-updated", ({ zoomLevel }) => {
+        if (zoomLevel < 0) {
+          viewerInstance.zoom(0);
+        }
+      });
+
+      viewerInstance.addEventListener(
         "ready",
         () => {
-          viewer?.setOptions({ maxFov: 120 });
           setIsViewerReady(true);
         },
         { once: true },
@@ -67,10 +88,11 @@ export default function PhotoViewer() {
     initViewer();
 
     return () => {
-      viewer?.destroy();
-      viewer = null;
+      isCancelled = true;
+      viewerRef.current?.destroy();
+      viewerRef.current = null;
     };
-  }, [selectedPrefecture, updateYawPitch]);
+  }, [selectedPrefecture, updateYawPitch, setIsViewerReady]);
 
   return <div ref={containerRef} className="w-screen h-dvh" />;
 }
