@@ -6,6 +6,7 @@ import "@photo-sphere-viewer/core/index.css";
 import { Analytics } from "@vercel/analytics/next";
 import EditOrientation from "@/components/EditOrientation";
 import { ToastContainer } from "react-toastify";
+import { getRegionsAndPrefectures } from "@/src/dal/regionsAndPrefectures";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID!;
 
@@ -23,6 +24,8 @@ export const metadata: Metadata = {
   title: "Japan 360",
   description: "My 360 Journey Through Japan",
 };
+
+const regions = getRegionsAndPrefectures();
 
 export default function RootLayout({
   children,
@@ -50,7 +53,7 @@ export default function RootLayout({
         </Script>
         <ToastContainer position="bottom-center" autoClose={3000} />
         <Analytics></Analytics>
-        <EditOrientation />
+        <EditOrientation regions={regions} />
         {children}
       </body>
     </html>

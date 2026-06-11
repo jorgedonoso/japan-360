@@ -7,8 +7,13 @@ import { toast } from "react-toastify";
 import { isProduction } from "@/src/util/helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { RegionGrouped } from "@/src/dal/regionsAndPrefectures";
 
-export default function EditOrientation() {
+export default function EditOrientation({
+  regions,
+}: {
+  regions: RegionGrouped[];
+}) {
   const prefecture = useLocationStore((s) => s.selectedPrefecture);
   const yaw = useLocationStore((s) => s.objects[prefecture!]?.yaw);
   const pitch = useLocationStore((s) => s.objects[prefecture!]?.pitch);
@@ -43,7 +48,7 @@ export default function EditOrientation() {
   return (
     <div className="absolute w-64 m-2 rounded text-black z-[9999]">
       <div className="max-w-md mx-auto p-4 bg-white rounded-lg shadow">
-        <PrefectureSelect></PrefectureSelect>
+        <PrefectureSelect regions={regions}></PrefectureSelect>
         <form className="space-y-2">
           <div>
             <label className="block font-bold mb-1">Yaw:</label>

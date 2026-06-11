@@ -1,17 +1,20 @@
 "use client";
 
 import { useLocationStore } from "@/src/stores/useLocationStore";
-import regionsAndPrefectures from "@/src/data/regions-and-prefectures.json";
 import { createRegionLookup, doesImageExist } from "@/src/util/helpers";
 import { trackEvent } from "@/src/lib/googleTag";
 import { toast } from "react-toastify";
+import { RegionGrouped } from "@/src/dal/regionsAndPrefectures";
+import { useMemo } from "react";
 
-const regionLookup = createRegionLookup(regionsAndPrefectures);
-
-export default function PrefectureSelect() {
+export default function PrefectureSelect({
+  regions,
+}: {
+  regions: RegionGrouped[];
+}) {
+  const regionLookup = useMemo(() => createRegionLookup(regions), [regions]);
   const selectedPrefecture = useLocationStore((s) => s.selectedPrefecture);
   const setPrefecture = useLocationStore((s) => s.setSelected);
-
   const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedPref = e.target.value;
     const isImageOk = await doesImageExist(
@@ -36,7 +39,7 @@ export default function PrefectureSelect() {
       onChange={handleChange}
       value={selectedPrefecture}
     >
-      {regionsAndPrefectures.map((region) => (
+      {regions.map((region) => (
         <optgroup key={region.name} label={`${region.name} Region`}>
           {region.prefectures.map((pref) => (
             <option key={pref} value={pref}>
