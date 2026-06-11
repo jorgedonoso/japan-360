@@ -2,6 +2,12 @@
 
 Immersive 360° gallery of my journey through Japan’s 47 prefectures.
 
+## Demo
+
+[https://japan-360.vercel.app/](https://japan-360.vercel.app/)
+
+![Demo](./docs/demo.png)
+
 ## Tech Stack
 
 - Next.js
