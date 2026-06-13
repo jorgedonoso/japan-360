@@ -12,6 +12,7 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { RegionGrouped } from "@/src/dal/regionsAndPrefectures";
+import { Button } from "./Button";
 
 export default function EditOrientation({
   regions,
@@ -79,23 +80,17 @@ export default function EditOrientation({
             <label className="block font-bold">Pitch:</label>
             <span className="text-sm text-gray-600">{pitch}</span>
           </div>
-          <button
-            type="button"
-            onClick={handleSave}
-            className="cursor-pointer font-bold w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
-          >
-            <FontAwesomeIcon icon={faSave} className="mr-1" />
+          <Button onClick={handleSave} variant="primary" icon={faSave}>
             Save Orientation
-          </button>
+          </Button>
           {isProduction() && (
-            <button
-              type="button"
+            <Button
               onClick={handleClearLocalStorage}
-              className="cursor-pointer font-bold w-full bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600 transition"
+              variant="secondary"
+              icon={faTrash}
             >
-              <FontAwesomeIcon icon={faTrash} className="mr-1" />
               Clear Local Storage
-            </button>
+            </Button>
           )}
         </form>
       </div>
