@@ -6,7 +6,11 @@ import PrefectureSelect from "./PrefectureSelect";
 import { toast } from "react-toastify";
 import { isProduction } from "@/src/util/helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleInfo,
+  faSave,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { RegionGrouped } from "@/src/dal/regionsAndPrefectures";
 
 export default function EditOrientation({
@@ -53,25 +57,32 @@ export default function EditOrientation({
 
   return (
     <div className="absolute w-64 m-2 rounded text-black z-[9999]">
-      <div className="max-w-md mx-auto p-4 bg-white rounded-lg shadow">
+      <div className="max-w-md mx-auto p-4 bg-white rounded shadow">
         <PrefectureSelect regions={regions}></PrefectureSelect>
+        <div className="w-full items-center gap-2 text-xs text-amber-700 bg-amber-50 p-1 mb-2 rounded">
+          <FontAwesomeIcon
+            icon={faCircleInfo}
+            className="text-amber-500 w-4 h-4 mr-1"
+          />
+          <span>Ordered by geographical location</span>
+        </div>
         <form className="space-y-1">
           <div>
             <label className="block font-bold">Description:</label>
-            <span className="text-sm">{description ?? "-"}</span>
+            <span className="text-sm text-gray-600">{description ?? "-"}</span>
           </div>
           <div>
             <label className="block font-bold">Yaw:</label>
-            <span className="text-sm">{yaw}</span>
+            <span className="text-sm text-gray-600">{yaw}</span>
           </div>
           <div>
             <label className="block font-bold">Pitch:</label>
-            <span className="text-sm">{pitch}</span>
+            <span className="text-sm text-gray-600">{pitch}</span>
           </div>
           <button
             type="button"
             onClick={handleSave}
-            className="cursor-pointer font-bold w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition"
+            className="cursor-pointer font-bold w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
           >
             <FontAwesomeIcon icon={faSave} className="mr-1" />
             Save Orientation
@@ -80,7 +91,7 @@ export default function EditOrientation({
             <button
               type="button"
               onClick={handleClearLocalStorage}
-              className="cursor-pointer font-bold w-full bg-orange-500 text-white py-2 px-4 rounded-md hover:bg-orange-600 transition"
+              className="cursor-pointer font-bold w-full bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600 transition"
             >
               <FontAwesomeIcon icon={faTrash} className="mr-1" />
               Clear Local Storage
