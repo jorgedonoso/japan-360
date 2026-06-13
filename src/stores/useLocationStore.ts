@@ -1,28 +1,28 @@
 import { create } from "zustand";
 
 interface LocationState {
-  objects: Record<string, Orientation>; // From db.
+  locations: Record<string, Location360>;
   selectedPrefecture: string;
   setSelected: (prefecture: string) => void;
-  updateYawPitch: (prefecture: string, yaw: number, pitch: number) => void;
+  updateObject: (prefecture: string, patch: Partial<Location360>) => void;
   isViewerReady: boolean;
-  setIsViewerReady: (isViewerReady: boolean) => void;
+  setIsViewerReady: (v: boolean) => void;
 }
 
 export const useLocationStore = create<LocationState>((set) => ({
-  objects: {
-    Hokkaido: { yaw: 0, pitch: 0 },
-    Tokyo: { yaw: 0, pitch: 0 },
-  },
+  locations: {},
   selectedPrefecture: "Hokkaido",
   setSelected: (prefecture) => set({ selectedPrefecture: prefecture }),
-  updateYawPitch: (prefecture, yaw, pitch) =>
+  updateObject: (prefecture, patch) =>
     set((state) => ({
-      objects: {
-        ...state.objects,
-        [prefecture]: { ...state.objects[prefecture], yaw, pitch },
+      locations: {
+        ...state.locations,
+        [prefecture]: {
+          ...(state.locations[prefecture] ?? {}),
+          ...patch,
+        },
       },
     })),
   isViewerReady: false,
-  setIsViewerReady: (isViewerReady) => set({ isViewerReady }),
+  setIsViewerReady: (v) => set({ isViewerReady: v }),
 }));

@@ -15,8 +15,11 @@ export default function EditOrientation({
   regions: RegionGrouped[];
 }) {
   const prefecture = useLocationStore((s) => s.selectedPrefecture);
-  const yaw = useLocationStore((s) => s.objects[prefecture!]?.yaw);
-  const pitch = useLocationStore((s) => s.objects[prefecture!]?.pitch);
+  const yaw = useLocationStore((s) => s.locations[prefecture!]?.yaw);
+  const pitch = useLocationStore((s) => s.locations[prefecture!]?.pitch);
+  const description = useLocationStore(
+    (s) => s.locations[prefecture!]?.description,
+  );
   const isViewerReady = useLocationStore((s) => s.isViewerReady);
 
   const handleClearLocalStorage = () => {
@@ -26,7 +29,10 @@ export default function EditOrientation({
 
   const handleSave = async () => {
     if (isProduction()) {
-      localStorage.setItem(prefecture, JSON.stringify({ yaw, pitch }));
+      localStorage.setItem(
+        prefecture,
+        JSON.stringify({ yaw, pitch, description }),
+      );
       toast.success("Orientation Saved to Local Storage");
     } else {
       const res = await savePoint({
@@ -49,14 +55,18 @@ export default function EditOrientation({
     <div className="absolute w-64 m-2 rounded text-black z-[9999]">
       <div className="max-w-md mx-auto p-4 bg-white rounded-lg shadow">
         <PrefectureSelect regions={regions}></PrefectureSelect>
-        <form className="space-y-2">
+        <form className="space-y-1">
           <div>
-            <label className="block font-bold mb-1">Yaw:</label>
-            {yaw}
+            <label className="block font-bold">Description:</label>
+            <span className="text-sm">{description ?? "-"}</span>
           </div>
           <div>
-            <label className="block font-bold mb-1">Pitch:</label>
-            {pitch}
+            <label className="block font-bold">Yaw:</label>
+            <span className="text-sm">{yaw}</span>
+          </div>
+          <div>
+            <label className="block font-bold">Pitch:</label>
+            <span className="text-sm">{pitch}</span>
           </div>
           <button
             type="button"

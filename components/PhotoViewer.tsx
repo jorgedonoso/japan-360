@@ -11,7 +11,7 @@ import { isProduction } from "@/src/util/helpers";
 export default function PhotoViewer() {
   const containerRef = useRef<HTMLDivElement>(null);
   const setIsViewerReady = useLocationStore((s) => s.setIsViewerReady);
-  const updateYawPitch = useLocationStore((s) => s.updateYawPitch);
+  const updateObject = useLocationStore((s) => s.updateObject);
   const selectedPrefecture = useLocationStore((s) => s.selectedPrefecture);
 
   const viewerRef = useRef<Viewer | null>(null);
@@ -31,7 +31,7 @@ export default function PhotoViewer() {
         if (localOrientationRaw) {
           const localOrientation = JSON.parse(
             localOrientationRaw,
-          ) as Orientation;
+          ) as Location360;
           orientation = localOrientation;
           toast.warn("Showing coordinates from Local Storage");
         }
@@ -45,7 +45,12 @@ export default function PhotoViewer() {
         viewerRef.current.destroy();
       }
 
-      updateYawPitch(selectedPrefecture, orientation.yaw, orientation.pitch);
+      // Init state on select.
+      updateObject(selectedPrefecture, {
+        yaw: orientation.yaw,
+        pitch: orientation.pitch,
+        description: orientation.description,
+      });
 
       const viewerInstance = new Viewer({
         container: containerRef.current!,
@@ -63,11 +68,10 @@ export default function PhotoViewer() {
       viewerRef.current = viewerInstance;
 
       viewerInstance.addEventListener("position-updated", (position) => {
-        updateYawPitch(
-          selectedPrefecture,
-          position.position.yaw,
-          position.position.pitch,
-        );
+        updateObject(selectedPrefecture, {
+          yaw: position.position.yaw,
+          pitch: position.position.pitch,
+        });
       });
 
       viewerInstance.addEventListener("zoom-updated", ({ zoomLevel }) => {
@@ -92,7 +96,7 @@ export default function PhotoViewer() {
       viewerRef.current?.destroy();
       viewerRef.current = null;
     };
-  }, [selectedPrefecture, updateYawPitch, setIsViewerReady]);
+  }, [selectedPrefecture, updateObject, setIsViewerReady]);
 
   return <div ref={containerRef} className="w-screen h-dvh" />;
 }

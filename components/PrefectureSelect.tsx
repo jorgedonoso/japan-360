@@ -35,7 +35,7 @@ export default function PrefectureSelect({
 
   return (
     <select
-      className="w-full mb-4 rounded-md bg-white text-black z-[9999] border p-2"
+      className="w-full mb-2 rounded-md bg-white text-black z-[9999] border p-2"
       onChange={handleChange}
       value={selectedPrefecture}
     >
