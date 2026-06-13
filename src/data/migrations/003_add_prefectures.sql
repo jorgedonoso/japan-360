@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS prefectures (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT UNIQUE NOT NULL,
+  region_id INTEGER NOT NULL,
+  FOREIGN KEY (region_id) REFERENCES regions(id)
+);

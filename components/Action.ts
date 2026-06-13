@@ -1,6 +1,6 @@
 "use server";
 
-import db from "@/src/data/database";
+import db from "@/src/data/client";
 
 export async function getInitialOrientation(
   prefecture: string,
