@@ -1,4 +1,4 @@
-import PhotoViewer from "../components/PhotoViewer";
+import PhotoViewer from "@/components/PhotoViewer";
 
 export default function Home() {
   return <PhotoViewer></PhotoViewer>;

@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocationStore } from "@/src/stores/useLocationStore";
-import { savePoint } from "./Action";
+import { savePoint } from "@/src/actions/EditOrientationActions";
 import PrefectureSelect from "./PrefectureSelect";
 import { toast } from "react-toastify";
 import { isProduction } from "@/src/util/helpers";

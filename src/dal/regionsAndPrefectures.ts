@@ -1,4 +1,4 @@
-import db from "../data/client";
+import db from "@/src/data/client";
 
 type Region2Prefecture = {
   region: string;
