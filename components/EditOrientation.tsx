@@ -5,15 +5,12 @@ import { savePoint } from "./Action";
 import PrefectureSelect from "./PrefectureSelect";
 import { toast } from "react-toastify";
 import { isProduction } from "@/src/util/helpers";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCircleInfo,
-  faSave,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faSave, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { RegionGrouped } from "@/src/dal/regionsAndPrefectures";
 import { Button } from "./Button";
 import { LabelValue } from "./LabelValue";
+import { Field } from "./Field";
+import { Warning } from "./Warning";
 
 export default function EditOrientation({
   regions,
@@ -61,14 +58,10 @@ export default function EditOrientation({
     <div className="absolute w-64 m-2 rounded text-black z-[9999]">
       <div className="max-w-md mx-auto p-4 bg-white rounded shadow">
         <form className="space-y-1">
-          <PrefectureSelect regions={regions}></PrefectureSelect>
-          <div className="w-full items-center gap-2 text-xs text-amber-700 bg-amber-50 p-1 mb-2 rounded">
-            <FontAwesomeIcon
-              icon={faCircleInfo}
-              className="text-amber-500 w-4 h-4 mr-1"
-            />
-            <span>Ordered by geographical location</span>
-          </div>
+          <Field label="Prefecture">
+            <PrefectureSelect regions={regions}></PrefectureSelect>
+            <Warning>Ordered by geographical location</Warning>
+          </Field>
 
           <LabelValue label="Description">{description}</LabelValue>
           <LabelValue label="Yaw">{yaw}</LabelValue>
