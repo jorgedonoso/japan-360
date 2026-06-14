@@ -13,6 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { RegionGrouped } from "@/src/dal/regionsAndPrefectures";
 import { Button } from "./Button";
+import { LabelValue } from "./LabelValue";
 
 export default function EditOrientation({
   regions,
@@ -59,27 +60,20 @@ export default function EditOrientation({
   return (
     <div className="absolute w-64 m-2 rounded text-black z-[9999]">
       <div className="max-w-md mx-auto p-4 bg-white rounded shadow">
-        <PrefectureSelect regions={regions}></PrefectureSelect>
-        <div className="w-full items-center gap-2 text-xs text-amber-700 bg-amber-50 p-1 mb-2 rounded">
-          <FontAwesomeIcon
-            icon={faCircleInfo}
-            className="text-amber-500 w-4 h-4 mr-1"
-          />
-          <span>Ordered by geographical location</span>
-        </div>
         <form className="space-y-1">
-          <div>
-            <label className="block font-bold">Description:</label>
-            <span className="text-sm text-gray-600">{description ?? "-"}</span>
+          <PrefectureSelect regions={regions}></PrefectureSelect>
+          <div className="w-full items-center gap-2 text-xs text-amber-700 bg-amber-50 p-1 mb-2 rounded">
+            <FontAwesomeIcon
+              icon={faCircleInfo}
+              className="text-amber-500 w-4 h-4 mr-1"
+            />
+            <span>Ordered by geographical location</span>
           </div>
-          <div>
-            <label className="block font-bold">Yaw:</label>
-            <span className="text-sm text-gray-600">{yaw}</span>
-          </div>
-          <div>
-            <label className="block font-bold">Pitch:</label>
-            <span className="text-sm text-gray-600">{pitch}</span>
-          </div>
+
+          <LabelValue label="Description">{description}</LabelValue>
+          <LabelValue label="Yaw">{yaw}</LabelValue>
+          <LabelValue label="Pitch">{pitch}</LabelValue>
+
           <Button onClick={handleSave} variant="primary" icon={faSave}>
             Save Orientation
           </Button>
