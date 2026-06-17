@@ -78,6 +78,9 @@ export default function PhotoViewer() {
       viewerInstance.addEventListener(
         "ready",
         () => {
+          requestAnimationFrame(() => {
+            viewerInstance.zoom(20);
+          });
           setIsViewerReady(true);
         },
         { once: true },
