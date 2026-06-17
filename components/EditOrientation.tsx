@@ -5,7 +5,7 @@ import { savePoint } from "@/src/actions/EditOrientationActions";
 import PrefectureSelect from "./PrefectureSelect";
 import { toast } from "react-toastify";
 import { isProduction } from "@/src/util/helpers";
-import { faSave, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { RegionGrouped } from "@/src/dal/regionsAndPrefectures";
 import { Button } from "./Button";
 import { LabelValue } from "./LabelValue";
@@ -25,30 +25,17 @@ export default function EditOrientation({
   );
   const isViewerReady = useLocationStore((s) => s.isViewerReady);
 
-  const handleClearLocalStorage = () => {
-    localStorage.clear();
-    toast.success("Local Storage Cleared");
-  };
-
   const handleSave = async () => {
-    if (isProduction()) {
-      localStorage.setItem(
-        prefecture,
-        JSON.stringify({ yaw, pitch, description }),
-      );
-      toast.success("Orientation Saved to Local Storage");
-    } else {
-      const res = await savePoint({
-        prefecture,
-        yaw,
-        pitch,
-      });
+    const res = await savePoint({
+      prefecture,
+      yaw,
+      pitch,
+    });
 
-      if (!res) {
-        toast.error("Error Saving");
-      } else {
-        toast.success("Orientation Saved to Database");
-      }
+    if (!res) {
+      toast.error("Error Saving Orientation");
+    } else {
+      toast.success("Orientation Saved");
     }
   };
 
@@ -67,16 +54,9 @@ export default function EditOrientation({
           <LabelValue label="Yaw">{yaw}</LabelValue>
           <LabelValue label="Pitch">{pitch}</LabelValue>
 
-          <Button onClick={handleSave} variant="primary" icon={faSave}>
-            Save Orientation
-          </Button>
-          {isProduction() && (
-            <Button
-              onClick={handleClearLocalStorage}
-              variant="secondary"
-              icon={faTrash}
-            >
-              Clear Local Storage
+          {!isProduction() && (
+            <Button onClick={handleSave} variant="primary" icon={faSave}>
+              Save Orientation
             </Button>
           )}
         </form>

@@ -5,8 +5,6 @@ import { Viewer } from "@photo-sphere-viewer/core";
 import "@photo-sphere-viewer/core/index.css";
 import { useLocationStore } from "@/src/stores/useLocationStore";
 import { getInitialOrientation } from "@/src/actions/PhotoViewerActions";
-import { toast } from "react-toastify";
-import { isProduction } from "@/src/util/helpers";
 
 export default function PhotoViewer() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -24,18 +22,6 @@ export default function PhotoViewer() {
     async function initViewer() {
       setIsViewerReady(false);
       let orientation = await getInitialOrientation(selectedPrefecture);
-
-      // Check localStorage in production as Vercel's fs is temporary.
-      if (isProduction()) {
-        const localOrientationRaw = localStorage.getItem(selectedPrefecture);
-        if (localOrientationRaw) {
-          const localOrientation = JSON.parse(
-            localOrientationRaw,
-          ) as Location360;
-          orientation = localOrientation;
-          toast.warn("Showing coordinates from Local Storage");
-        }
-      }
 
       // Abort if component is destroyed waiting for initial orientation.
       if (isCancelled) return;
