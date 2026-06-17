@@ -56,13 +56,14 @@ export default function PhotoViewer() {
         container: containerRef.current!,
         panorama: `${process.env.NEXT_PUBLIC_IMAGES_URL}/${selectedPrefecture}.jpg`,
         navbar: false,
+        minFov: 100,
+        maxFov: 150,
+        defaultZoomLvl: 0,
+        moveInertia: true,
+        mousewheel: true,
+        fisheye: 2,
         defaultYaw: orientation.yaw,
         defaultPitch: orientation.pitch,
-        minFov: 30,
-        maxFov: 120,
-        defaultZoomLvl: 0,
-        moveInertia: false,
-        mousewheel: false,
       });
 
       viewerRef.current = viewerInstance;
@@ -72,12 +73,6 @@ export default function PhotoViewer() {
           yaw: position.position.yaw,
           pitch: position.position.pitch,
         });
-      });
-
-      viewerInstance.addEventListener("zoom-updated", ({ zoomLevel }) => {
-        if (zoomLevel < 0) {
-          viewerInstance.zoom(0);
-        }
       });
 
       viewerInstance.addEventListener(
