@@ -42,8 +42,8 @@ export default function EditOrientation({
   if (!isViewerReady) return <></>;
 
   return (
-    <div className="absolute w-64 m-2 rounded text-black z-[9999]">
-      <div className="max-w-md mx-auto p-4 bg-white rounded shadow">
+    <div className="absolute w-64 m-2 rounded text-black z-9999">
+      <div className="max-w-md mx-auto p-3 bg-white rounded shadow">
         <form className="space-y-1">
           <Field label="Prefecture">
             <PrefectureSelect regions={regions}></PrefectureSelect>

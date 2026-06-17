@@ -19,7 +19,7 @@ export function Button({ onClick, variant, icon, children }: ButtonProps) {
     <button
       type="button"
       onClick={onClick}
-      className={`cursor-pointer w-full p-2 rounded transition text-white ${variantClasses[variant]}`}
+      className={`cursor-pointer w-full p-2 rounded transition text-sm text-white ${variantClasses[variant]}`}
     >
       {icon && <FontAwesomeIcon icon={icon} className="mr-1" />}
       {children}
