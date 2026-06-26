@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Viewer } from "@photo-sphere-viewer/core";
+import { events, Viewer } from "@photo-sphere-viewer/core";
 import "@photo-sphere-viewer/core/index.css";
 import { useLocationStore } from "@/src/stores/useLocationStore";
 import { getInitialOrientation } from "@/src/actions/PhotoViewerActions";
@@ -48,8 +48,8 @@ export default function PhotoViewer() {
         moveInertia: true,
         mousewheel: true,
         fisheye: 2,
-        defaultYaw: orientation.yaw,
-        defaultPitch: orientation.pitch,
+        defaultYaw: "90deg",
+        defaultPitch: 0,
       });
 
       viewerRef.current = viewerInstance;
@@ -61,12 +61,20 @@ export default function PhotoViewer() {
         });
       });
 
+      // Initial animation.
+      viewerInstance.addEventListener(events.ReadyEvent.type, async () => {
+        await viewerInstance.animate({
+          zoom: 20,
+          pitch: orientation.pitch,
+          yaw: orientation.yaw,
+          speed: 2000,
+        });
+      });
+
+      // Handle floating menu visibility.
       viewerInstance.addEventListener(
-        "ready",
+        events.ReadyEvent.type,
         () => {
-          requestAnimationFrame(() => {
-            viewerInstance.zoom(20);
-          });
           setIsViewerReady(true);
         },
         { once: true },
