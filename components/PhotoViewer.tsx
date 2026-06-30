@@ -54,12 +54,15 @@ export default function PhotoViewer() {
 
       viewerRef.current = viewerInstance;
 
-      viewerInstance.addEventListener("position-updated", (position) => {
-        updateObject(selectedPrefecture, {
-          yaw: position.position.yaw,
-          pitch: position.position.pitch,
-        });
-      });
+      viewerInstance.addEventListener(
+        events.PositionUpdatedEvent.type,
+        (position) => {
+          updateObject(selectedPrefecture, {
+            yaw: position.position.yaw,
+            pitch: position.position.pitch,
+          });
+        },
+      );
 
       // Initial animation.
       viewerInstance.addEventListener(events.ReadyEvent.type, async () => {
