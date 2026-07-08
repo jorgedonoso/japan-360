@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "@photo-sphere-viewer/core/index.css";
 import { Analytics } from "@vercel/analytics/next";
-import EditOrientation from "@/components/EditOrientation";
+import EditOrientation from "@/src/components/EditOrientation";
 import { ToastContainer } from "react-toastify";
 import { getRegionsAndPrefectures } from "@/src/dal/regionsAndPrefectures";
 
