@@ -1,6 +1,6 @@
 # Japan 360
 
-360° photo gallery exploring Japan’s 47 prefectures.
+360° photo gallery exploring Japan's 47 prefectures, captured while living in Japan.
 
 ## Demo
 
