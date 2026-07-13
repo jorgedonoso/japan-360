@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { events, Viewer } from "@photo-sphere-viewer/core";
 import "@photo-sphere-viewer/core/index.css";
 import { useLocationStore } from "@/src/stores/useLocationStore";
-import { getInitialOrientation } from "@/src/actions/PhotoViewerActions";
+import { getInitialOrientation } from "../logic/PhotoOrientationLogic";
 
 export default function PhotoViewer() {
   const containerRef = useRef<HTMLDivElement>(null);

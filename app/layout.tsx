@@ -6,7 +6,7 @@ import "@photo-sphere-viewer/core/index.css";
 import { Analytics } from "@vercel/analytics/next";
 import EditOrientation from "@/src/components/EditOrientation";
 import { ToastContainer } from "react-toastify";
-import { getRegionsAndPrefectures } from "@/src/dal/regionsAndPrefectures";
+import { getRegionsAndPrefectures } from "@/src/logic/RegionLogic";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID!;
 

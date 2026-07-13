@@ -1,11 +1,11 @@
 "use client";
 
 import { useLocationStore } from "@/src/stores/useLocationStore";
-import { createRegionLookup, doesImageExist } from "@/src/util/helpers";
+import { createRegionLookup, doesImageExist } from "@/src/logic/helpers";
 import { trackEvent } from "@/src/lib/googleTag";
 import { toast } from "react-toastify";
-import { RegionGrouped } from "@/src/dal/regionsAndPrefectures";
 import { useMemo } from "react";
+import { RegionGrouped } from "../types/RegionGrouped";
 
 export default function PrefectureSelect({
   regions,

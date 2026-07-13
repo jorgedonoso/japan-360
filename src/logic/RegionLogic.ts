@@ -1,14 +1,6 @@
 import db from "@/src/data/client";
-
-type Region2Prefecture = {
-  region: string;
-  prefecture: string;
-};
-
-export type RegionGrouped = {
-  name: string;
-  prefectures: string[];
-};
+import { RegionGrouped } from "../types/RegionGrouped";
+import { Region2Prefecture } from "../types/RegionToPrefecture";
 
 export function getRegionsAndPrefectures(): RegionGrouped[] {
   const rows = db

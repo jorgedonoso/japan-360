@@ -1,13 +1,14 @@
 import { create } from "zustand";
+import { Location360 } from "../types/Location360";
 
-interface LocationState {
+type LocationState = {
   locations: Record<string, Location360>;
   selectedPrefecture: string;
   setSelected: (prefecture: string) => void;
   updateObject: (prefecture: string, patch: Partial<Location360>) => void;
   isViewerReady: boolean;
   setIsViewerReady: (v: boolean) => void;
-}
+};
 
 export const useLocationStore = create<LocationState>((set) => ({
   locations: {},

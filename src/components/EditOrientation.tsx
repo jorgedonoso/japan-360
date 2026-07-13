@@ -1,16 +1,16 @@
 "use client";
 
 import { useLocationStore } from "@/src/stores/useLocationStore";
-import { savePoint } from "@/src/actions/EditOrientationActions";
+import { savePoint } from "@/src/logic/PhotoOrientationLogic";
 import PrefectureSelect from "./PrefectureSelect";
 import { toast } from "react-toastify";
-import { isProduction } from "@/src/util/helpers";
+import { isProduction } from "@/src/logic/helpers";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
-import { RegionGrouped } from "@/src/dal/regionsAndPrefectures";
 import { Button } from "./Button";
 import { LabelValue } from "./LabelValue";
 import { Field } from "./Field";
 import { Warning } from "./Warning";
+import { RegionGrouped } from "../types/RegionGrouped";
 
 export default function EditOrientation({
   regions,
